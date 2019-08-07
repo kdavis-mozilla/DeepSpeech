@@ -647,12 +647,6 @@ def test():
 def create_inference_graph(batch_size=1, n_steps=16, tflite=False):
     batch_size = batch_size if batch_size > 0 else None
 
-    # Create feature computation graph
-    input_samples = tfv1.placeholder(tf.float32, [Config.audio_window_samples], 'input_samples')
-    samples = tf.expand_dims(input_samples, -1)
-    mfccs, _ = samples_to_mfccs(samples, FLAGS.audio_sample_rate)
-    mfccs = tf.identity(mfccs, name='mfccs')
-
     # Input tensor will be of shape [batch_size, n_steps, 2*n_context+1, n_input]
     # This shape is read by the native_client in DS_CreateModel to know the
     # value of n_steps, n_context and n_input. Make sure you update the code
@@ -714,11 +708,17 @@ def create_inference_graph(batch_size=1, n_steps=16, tflite=False):
     new_state_c = tf.identity(new_state_c, name='new_state_c')
     new_state_h = tf.identity(new_state_h, name='new_state_h')
 
+    # Create feature computation graph
+    #input_samples = tfv1.placeholder(tf.float32, [Config.audio_window_samples], 'input_samples')
+    #samples = tf.expand_dims(input_samples, -1)
+    #mfccs, _ = samples_to_mfccs(samples, FLAGS.audio_sample_rate)
+    #mfccs = tf.identity(mfccs, name='mfccs')
+
     inputs = {
         'input': input_tensor,
         'previous_state_c': previous_state_c,
         'previous_state_h': previous_state_h,
-        'input_samples': input_samples,
+        #'input_samples': input_samples,
     }
 
     if not FLAGS.export_tflite:
@@ -728,7 +728,7 @@ def create_inference_graph(batch_size=1, n_steps=16, tflite=False):
         'outputs': logits,
         'new_state_c': new_state_c,
         'new_state_h': new_state_h,
-        'mfccs': mfccs,
+        #'mfccs': mfccs,
     }
 
     return inputs, outputs, layers
@@ -750,6 +750,14 @@ def export():
     output_names = ",".join(output_names_tensors + output_names_ops)
 
     # Create a saver using variables from the above newly created graph
+### REUSE 0.5.1 CHECKPOINT ###     def fixup(name):
+### REUSE 0.5.1 CHECKPOINT ###         if name.startswith('cudnn_lstm/rnn/multi_rnn_cell/cell_0/cudnn_compatible_lstm_cell/'):
+### REUSE 0.5.1 CHECKPOINT ###             return name.replace('cudnn_lstm/rnn/multi_rnn_cell/cell_0/cudnn_compatible_lstm_cell/', 'lstm_fused_cell/')
+### REUSE 0.5.1 CHECKPOINT ###         return name
+### REUSE 0.5.1 CHECKPOINT ###     mapping = {fixup(v.op.name): v for v in tfv1.global_variables()}
+### REUSE 0.5.1 CHECKPOINT ### 
+### REUSE 0.5.1 CHECKPOINT ###     # Create a saver using variables from the above newly created graph
+### REUSE 0.5.1 CHECKPOINT ###     saver = tfv1.train.Saver(mapping)
     saver = tfv1.train.Saver()
 
     # Restore variables from training checkpoint
@@ -809,6 +817,14 @@ def export():
 
             converter = tf.lite.TFLiteConverter(frozen_graph, input_tensors=inputs.values(), output_tensors=outputs.values())
             converter.post_training_quantize = True
+            converter.inference_type = tf.lite.constants.QUANTIZED_UINT8
+            converter.quantized_input_stats = {
+                'input_samples': (0., 1.),
+                'input_node': (0., 1.),
+                'previous_state_c': (0., 1.),
+                'previous_state_h': (0., 1.),
+            }
+            converter.default_ranges_stats = (0, 128)
             # AudioSpectrogram and Mfcc ops are custom but have built-in kernels in TFLite
             converter.allow_custom_ops = True
             tflite_model = converter.convert()
