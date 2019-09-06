@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DeepSpeech NodeJS bindings documentation &mdash; deepspeech-node 0.6.0-alpha.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> deepspeech-node
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">DeepSpeech NodeJS bindings documentation</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">deepspeech-node</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>DeepSpeech NodeJS bindings documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="deepspeech-nodejs-bindings-documentation">
+<h1>DeepSpeech NodeJS bindings documentation<a class="headerlink" href="#deepspeech-nodejs-bindings-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="class">
+<dt id="Model">
+<em class="property">class </em><code class="descname">Model</code><span class="sig-paren">(</span><em>aModelPath</em>, <em>aNCep</em>, <em>aNContext</em>, <em>aAlphabetConfigPath</em>, <em>aBeamWidth</em><span class="sig-paren">)</span><a class="headerlink" href="#Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object providing an interface to a trained DeepSpeech model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aModelPath</strong> (<em>string</em>) – The path to the frozen model graph.</li>
+<li><strong>aNCep</strong> (<em>number</em>) – The number of cepstrum the model was trained with.</li>
+<li><strong>aNContext</strong> (<em>number</em>) – The context window the model was trained with.</li>
+<li><strong>aAlphabetConfigPath</strong> (<em>string</em>) – The path to the configuration file specifying the alphabet used by the network. See alphabet.h.</li>
+<li><strong>aBeamWidth</strong> (<em>number</em>) – The beam width used by the decoder. A larger beam width generates better results at the cost of decoding time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Throws:</th><td class="field-body"><p class="first last">on error</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="Model.enableDecoderWithLM">
+<code class="descclassname">Model.</code><code class="descname">enableDecoderWithLM</code><span class="sig-paren">(</span><em>aAlphabetConfigPath</em>, <em>aLMPath</em>, <em>aTriePath</em>, <em>aLMAlpha</em>, <em>aLMBeta</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.enableDecoderWithLM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable decoding using beam scoring with a KenLM language model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aAlphabetConfigPath</strong> (<em>string</em>) – The path to the configuration file specifying the alphabet used by the network. See alphabet.h.</li>
+<li><strong>aLMPath</strong> (<em>string</em>) – The path to the language model binary file.</li>
+<li><strong>aTriePath</strong> (<em>string</em>) – The path to the trie file build from the same vocabulary as the language model binary.</li>
+<li><strong>aLMAlpha</strong> (<em>float</em>) – The alpha hyperparameter of the CTC decoder. Language Model weight.</li>
+<li><strong>aLMBeta</strong> (<em>float</em>) – The beta hyperparameter of the CTC decoder. Word insertion weight.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>number</strong> – Zero on success, non-zero on failure (invalid arguments).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.feedAudioContent">
+<code class="descclassname">Model.</code><code class="descname">feedAudioContent</code><span class="sig-paren">(</span><em>aSctx</em>, <em>aBuffer</em>, <em>aBufferSize</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.feedAudioContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed audio samples to an ongoing streaming inference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>aSctx</strong> (<em>object</em>) – A streaming state returned by <a class="reference internal" href="#Model.setupStream" title="Model.setupStream"><code class="xref js js-func docutils literal notranslate"><span class="pre">setupStream()</span></code></a>.</li>
+<li><strong>aBuffer</strong> (<em>buffer</em>) – An array of 16-bit, mono raw audio samples at the appropriate sample rate.</li>
+<li><strong>aBufferSize</strong> (<em>number</em>) – The number of samples in &#64;param aBuffer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.finishStream">
+<code class="descclassname">Model.</code><code class="descname">finishStream</code><span class="sig-paren">(</span><em>aSctx</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.finishStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the end of an audio signal to an ongoing streaming inference, returns the STT result over the whole audio signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aSctx</strong> (<em>object</em>) – A streaming state returned by <a class="reference internal" href="#Model.setupStream" title="Model.setupStream"><code class="xref js js-func docutils literal notranslate"><span class="pre">setupStream()</span></code></a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>string</strong> – The STT result. This method will free the state (&#64;param aSctx).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.finishStreamWithMetadata">
+<code class="descclassname">Model.</code><code class="descname">finishStreamWithMetadata</code><span class="sig-paren">(</span><em>aSctx</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.finishStreamWithMetadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the end of an audio signal to an ongoing streaming inference, returns per-letter metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aSctx</strong> (<em>object</em>) – A streaming state pointer returned by <a class="reference internal" href="#Model.setupStream" title="Model.setupStream"><code class="xref js js-func docutils literal notranslate"><span class="pre">setupStream()</span></code></a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>object</strong> – Outputs a struct of individual letters along with their timing information. The user is responsible for freeing Metadata by calling <a class="reference internal" href="#FreeMetadata" title="FreeMetadata"><code class="xref js js-func docutils literal notranslate"><span class="pre">FreeMetadata()</span></code></a>. This method will free the state pointer (&#64;param aSctx).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.intermediateDecode">
+<code class="descclassname">Model.</code><code class="descname">intermediateDecode</code><span class="sig-paren">(</span><em>aSctx</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.intermediateDecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the intermediate decoding of an ongoing streaming inference. This is an expensive process as the decoder implementation isn’t currently capable of streaming, so it always starts from the beginning of the audio.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aSctx</strong> (<em>object</em>) – A streaming state returned by <a class="reference internal" href="#Model.setupStream" title="Model.setupStream"><code class="xref js js-func docutils literal notranslate"><span class="pre">setupStream()</span></code></a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>string</strong> – The STT intermediate result.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.setupStream">
+<code class="descclassname">Model.</code><code class="descname">setupStream</code><span class="sig-paren">(</span><em>aSampleRate</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.setupStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new streaming inference state. The streaming state returned by this function can then be passed to <a class="reference internal" href="#Model.feedAudioContent" title="Model.feedAudioContent"><code class="xref js js-func docutils literal notranslate"><span class="pre">feedAudioContent()</span></code></a> and <a class="reference internal" href="#Model.finishStream" title="Model.finishStream"><code class="xref js js-func docutils literal notranslate"><span class="pre">finishStream()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aSampleRate</strong> (<em>number</em>) – The sample-rate of the audio signal.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Throws:</th><td class="field-body"><p class="first">on error</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>object</strong> – an opaque object that represents the streaming state.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.stt">
+<code class="descclassname">Model.</code><code class="descname">stt</code><span class="sig-paren">(</span><em>aBuffer</em>, <em>aBufferSize</em>, <em>aSampleRate</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.stt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the DeepSpeech model to perform Speech-To-Text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aBuffer</strong> (<em>object</em>) – A 16-bit, mono raw audio signal at the appropriate sample rate.</li>
+<li><strong>aBufferSize</strong> (<em>number</em>) – The number of samples in the audio signal.</li>
+<li><strong>aSampleRate</strong> (<em>number</em>) – The sample-rate of the audio signal.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>string</strong> – The STT result. Returns undefined on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Model.sttWithMetadata">
+<code class="descclassname">Model.</code><code class="descname">sttWithMetadata</code><span class="sig-paren">(</span><em>aBuffer</em>, <em>aBufferSize</em>, <em>aSampleRate</em><span class="sig-paren">)</span><a class="headerlink" href="#Model.sttWithMetadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the DeepSpeech model to perform Speech-To-Text and output metadata
+about the results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>aBuffer</strong> (<em>object</em>) – A 16-bit, mono raw audio signal at the appropriate sample rate.</li>
+<li><strong>aBufferSize</strong> (<em>number</em>) – The number of samples in the audio signal.</li>
+<li><strong>aSampleRate</strong> (<em>number</em>) – The sample-rate of the audio signal.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>object</strong> – Outputs a struct of individual letters along with their timing information. The user is responsible for freeing Metadata by calling <a class="reference internal" href="#FreeMetadata" title="FreeMetadata"><code class="xref js js-func docutils literal notranslate"><span class="pre">FreeMetadata()</span></code></a>. Returns undefined on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="DestroyModel">
+<code class="descname">DestroyModel</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#DestroyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frees associated resources and destroys model object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>object</em>) – A model pointer returned by <a class="reference internal" href="#Model" title="Model"><code class="xref js js-func docutils literal notranslate"><span class="pre">Model()</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="FreeMetadata">
+<code class="descname">FreeMetadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeMetadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free memory allocated for metadata information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>metadata</strong> (<em>Object</em>) – Object containing metadata as returned by <code class="xref js js-func docutils literal notranslate"><span class="pre">sttWithMetadata()</span></code> or <code class="xref js js-func docutils literal notranslate"><span class="pre">finishStreamWithMetadata()</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="printVersions">
+<code class="descname">printVersions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#printVersions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print version of this library and of the linked TensorFlow library on standard output.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, DeepSpeech Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
